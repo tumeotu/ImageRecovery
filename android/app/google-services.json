@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "341870914523",
+    "firebase_url": "https://imagerecovery-5030d.firebaseio.com",
+    "project_id": "imagerecovery-5030d",
+    "storage_bucket": "imagerecovery-5030d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:341870914523:android:8dc46d3d45c95ff67fd5fe",
+        "android_client_info": {
+          "package_name": "com.tvt.image_recovery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "341870914523-0qn95mhncotvs9tuhgpj8u34m867h1jk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tvt.image_recovery",
+            "certificate_hash": "43208be84a8eae5c15e210d980063172623de898"
+          }
+        },
+        {
+          "client_id": "341870914523-5vdtpe51ph1953jqhkma93q5rrpthaic.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2Mpsl8Ou1S1ox5PpgMyYGdxij11UWrC4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "341870914523-5vdtpe51ph1953jqhkma93q5rrpthaic.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
