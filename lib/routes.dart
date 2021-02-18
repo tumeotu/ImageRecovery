@@ -54,6 +54,7 @@ import 'package:image_recovery/pages/home/events/HomeEvent.dart';
 import 'package:image_recovery/pages/home/model/ModelImage.dart';
 import 'package:image_recovery/pages/home/view/home_view.dart';
 import 'package:image_recovery/pages/login/blocs/login_bloc.dart';
+import 'package:image_recovery/pages/login/events/login_event.dart';
 import 'package:image_recovery/utils/navigations/navigation_datasource.dart';
 import 'package:image_recovery/widgets/medias/camera_widget.dart';
 import 'package:image_recovery/widgets/medias/media.dart';
@@ -63,8 +64,7 @@ import 'data/models/user_models.dart';
 import 'modules/dichvucong/pages/dichvucong_tthc_chitiet_page.dart';
 import 'modules/tintuc/tintuc_imports.dart';
 import 'pages/SoThuTu/Model/LaySoThuTuHome.dart';
-import 'pages/login/login_page.dart';
-import 'pages/login/login_xacthuc_page.dart';
+import 'pages/login/view/login_page.dart';
 
 class Routes {
   static final sailor = Sailor();
@@ -172,7 +172,7 @@ class Routes {
           name: NamePage.loginPage.toString(),
           builder: (context, args, params) {
             return BlocProvider<LoginBloc>(
-              create: (_) => LoginBloc(),
+              create: (_) => LoginBloc()..add(LoginEventStart(false, false,"","")),
               child: LoginPage(),
             );
           },
@@ -412,25 +412,6 @@ class Routes {
       //       ),
       //     ]))
 
-      ///accuracyPage
-      ..addRoute(SailorRoute(
-          name: NamePage.accuracyPage.toString(),
-          builder: (context, args, params) {
-            return BlocProvider<LoginBloc>(
-              create: (_) => LoginBloc(),
-              child: LoginXacThucPage(),
-            );
-          },
-          params: [
-            SailorParam<UserCitizenLoginResult>(
-              name: 'userModel',
-              defaultValue: new UserCitizenLoginResult(),
-            ),
-            SailorParam<String>(
-              name: 'registerUserCitizen',
-              defaultValue: '',
-            ),
-          ]))
       ..addRoute(SailorRoute(
           name: NamePage.phananh_tracuu.toString(),
           builder: (context, args, params) {

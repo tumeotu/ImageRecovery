@@ -70,6 +70,8 @@ class _HistoryRecoverPageState extends State<HistoryRecoverPage> {
               }
             else
               this.images= state.images;
+            if(state.images.length==0)
+              return _getViewNoHistory();
             return _getCustomBodyView();
           }
           else{
@@ -79,6 +81,14 @@ class _HistoryRecoverPageState extends State<HistoryRecoverPage> {
         else if(state is HistoryRecoverStateFailure)
         {
           return _getCustomBodyFailure();
+        }
+        else if(state is HistoryRecoverStateMustLogin)
+        {
+          return _getCustomBodyNotifiLogin();
+        }
+        else if(state is HistoryRecoverStateMustConnectInterNet)
+        {
+          return _getCustomBodyNotifiConnectInternet();
         }
         return Container();
       },
@@ -390,6 +400,230 @@ class _HistoryRecoverPageState extends State<HistoryRecoverPage> {
                             child: ColorLoader3(),
                           )
                       ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  _getCustomBodyNotifiLogin() {
+    return Stack(
+      children: [
+        Center(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            color: Colors.white.withOpacity(0.8),
+            child: Center(
+              child: Container(
+                height: MediaQuery.of(context).size.height*0.25,
+                width: MediaQuery.of(context).size.width*0.8,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10)
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Text(
+                            "Bạn chưa đăng nhập!\n Vui lòng đăng nhập hoặc thử lại sau!",
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black87,
+                                fontWeight: FontWeight.w600
+                            ),
+                            textAlign: TextAlign.center
+                        ),
+                      ),
+                      Container(
+                          height: MediaQuery.of(context).size.height*0.1,
+                          width: MediaQuery.of(context).size.height*0.1,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Icon(
+                              FontAwesome.frown_o,
+                              size: 35,
+                              color: Color(0xff56AAE7),
+                            ),
+                          )
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: RaisedGradientButton(
+                                  height: 40,
+                                  width: 100,
+                                  child: Text(
+                                    AppTranslations.of(widget.contextString).text("OK").toString(),
+                                    style: TextStyle(
+                                        color:Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18
+                                    ),
+                                  ),
+                                  onPressed: () async {
+                                    _navigation.pushNavigation(NamePage.loginPage);
+                                  }
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: RaisedGradientButton(
+                                  height: 40,
+                                  width: 100,
+                                  child: Text(
+                                    AppTranslations.of(widget.contextString).text("Cancel").toString(),
+                                    style: TextStyle(
+                                        color:Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18
+                                    ),
+                                  ),
+                                  onPressed: () async {
+                                    widget.pageController.animateToPage(0, duration: Duration(milliseconds: 20), curve: Curves.linear);
+                                  }
+                              ),
+                            ),
+                          ],
+                        )
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  _getViewNoHistory() {
+    return Stack(
+      children: [
+        Center(
+          child: Padding(
+            padding: new EdgeInsets.only(top: 30),
+            child: Text(
+              "Lịch sử khôi phục hình ảnh trống",
+              style: TextStyle(
+                color: Colors.black87,
+                fontWeight: FontWeight.w600,
+                fontSize: 18
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  _getCustomBodyNotifiConnectInternet() {
+    return Stack(
+      children: [
+        Center(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            color: Colors.white.withOpacity(0.8),
+            child: Center(
+              child: Container(
+                height: MediaQuery.of(context).size.height*0.25,
+                width: MediaQuery.of(context).size.width*0.8,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10)
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Text(
+                            "Bạn chưa kết nối internet!\n Vui lòng kết nối để thực hiện!",
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black87,
+                                fontWeight: FontWeight.w600
+                            ),
+                            textAlign: TextAlign.center
+                        ),
+                      ),
+                      Container(
+                          height: MediaQuery.of(context).size.height*0.1,
+                          width: MediaQuery.of(context).size.height*0.1,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Icon(
+                              FontAwesome.frown_o,
+                              size: 35,
+                              color: Color(0xff56AAE7),
+                            ),
+                          )
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.only(top: 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: RaisedGradientButton(
+                                    height: 40,
+                                    width: 100,
+                                    child: Text(
+                                      AppTranslations.of(widget.contextString).text("OK").toString(),
+                                      style: TextStyle(
+                                          color:Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18
+                                      ),
+                                    ),
+                                    onPressed: () async {
+                                      widget.pageController.animateToPage(0, duration: Duration(milliseconds: 20), curve: Curves.linear);
+                                    }
+                                ),
+                              ),
+                            ],
+                          )
+                      )
                     ],
                   ),
                 ),

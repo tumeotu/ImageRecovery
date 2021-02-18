@@ -1,69 +1,47 @@
+import 'dart:typed_data';
 import 'package:equatable/equatable.dart';
-import 'package:image_recovery/data/models/user_models.dart';
+import 'package:image_recovery/pages/Filter/model/matrix.dart';
 
-class LoginState extends Equatable {
-
-  LoginState({
-    this.email = '',
-    this.hoTen = '',
-    this.soDienThoai = '',
-    this.ischeck=true,
-    this.isRegister
-  });
-
-  final String email;
-  final String hoTen;
-  final String soDienThoai;
-  final bool ischeck;
-  final bool isRegister;
-
-  @override
-  List<Object> get props => [email, hoTen, soDienThoai,this.ischeck,this.isRegister];
-
-  LoginState copyWith({
-    String email,
-    String hoTen,
-    String soDienThoai,
-    bool isCheck,
-    bool isRegister
-  }) {
-    return LoginState(
-      email: email ?? this.email,
-      hoTen: hoTen ?? this.hoTen,
-      soDienThoai: soDienThoai ?? this.soDienThoai,
-      ischeck: isCheck ?? this.ischeck,
-      isRegister: isRegister?? this.isRegister
-    );
-  }
-}
-
-
-class LoginStateSuccessful extends LoginState {
-  final UserCitizenLoginResult modelUserCitizen;
-
-  LoginStateSuccessful(this.modelUserCitizen);
-
+abstract class LoginState extends Equatable {
   @override
   // TODO: implement props
-  List<Object> get props => [this.modelUserCitizen];
+  List<Object> get props => throw UnimplementedError();
 }
 
-class LoginStateSuccessfulCheckCode extends LoginState {
-  final bool isCheckCode;
-
-  LoginStateSuccessfulCheckCode(this.isCheckCode);
-
+class LoginStateInitial extends LoginState {
+  bool isLogin;
+  bool isFailure;
+  String userName;
+  String password;
+  LoginStateInitial(this.isLogin,this.isFailure, this.userName, this.password);
+  LoginStateInitial copy(isLogin,isFailure) => LoginStateInitial(this.isLogin,this.isFailure, this.userName, this.password);
   @override
   // TODO: implement props
-  List<Object> get props => [this.isCheckCode];
+
+  List<Object> get props => [this.isLogin,this.isFailure, this.userName, this.password];
 }
 
-class LoginStateFailureRegister extends LoginState {
-  final String error;
-
-  LoginStateFailureRegister(this.error);
-
+class LoginStateFailure extends LoginState {
+  LoginStateFailure();
   @override
   // TODO: implement props
-  List<Object> get props => [this.error];
+  List<Object> get props => [];
+}
+
+class LoginStateStart extends LoginState {
+  bool isLogin;
+  LoginStateStart(this.isLogin);
+  @override
+  // TODO: implement props
+  List<Object> get props => [this.isLogin];
+}
+
+class LoginStateSuccess extends LoginState {
+  LoginStateSuccess();
+  @override
+  LoginStateSuccess copy() => LoginStateSuccess();
+  @override
+  // TODO: implement props
+
+  List<Object> get props => [];
 }

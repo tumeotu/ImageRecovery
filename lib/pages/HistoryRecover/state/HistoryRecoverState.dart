@@ -27,6 +27,20 @@ class HistoryRecoverStateFailure extends HistoryRecoverState {
   List<Object> get props => [];
 }
 
+class HistoryRecoverStateMustLogin extends HistoryRecoverState {
+  HistoryRecoverStateMustLogin();
+  @override
+  // TODO: implement props
+  List<Object> get props => [];
+}
+
+class HistoryRecoverStateMustConnectInterNet extends HistoryRecoverState {
+  HistoryRecoverStateMustConnectInterNet();
+  @override
+  // TODO: implement props
+  List<Object> get props => [];
+}
+
 class HistoryRecoverStateStart extends HistoryRecoverState {
   List<HistoryDatasourceModel> images;
   bool isGetDetail;

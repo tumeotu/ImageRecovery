@@ -2,20 +2,28 @@ import 'package:get_it/get_it.dart';
 import '../../../data/apis/logins/login_datasource.dart';
 import '../../../data/models/user_models.dart';
 import '../../../utils/networks/network_datasource.dart';
-
 import '../../../constants.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:io';
 
 class LoginResponse extends LoginDataSource {
   @override
-  Future<UserCitizenLoginResult> loginUserCitizen(String userName) async {
+  Future<UserInfoModel> login(String userName, String password) async {
     try {
-      final url = BASE_URL + '/api/LoginUser_NguoiDan';
-      var param = new Map<String, String>();
-      param['UserName'] = userName;
-      final data = await GetIt.instance
-          .get<NetworkDataSource>()
-          .post(Uri.parse(url), body: param);
-      return UserCitizenLoginResult.fromJson(data);
+      final url = BASE_URL + '/api/v1/user/login';
+      var body = json.encode({
+        "UserName": userName,
+        "Password": password,
+      });
+      Map<String,String> headers = {
+        'Content-type' : 'application/json',
+        'Accept': 'application/json',
+      };
+      final response =
+      await http.post(url, body: body, headers: headers);
+      final responseJson = json.decode(response.body);
+      return UserInfoModel.fromJson(responseJson);
     } catch (error) {
       print(error);
       return null;
@@ -23,16 +31,21 @@ class LoginResponse extends LoginDataSource {
   }
 
   @override
-  Future<bool> checkCodeByUserLogin(String userName,String code) async{
+  Future<UserInfoModel> login_facebook(String accessToken, String userID) async {
     try {
-      final url = BASE_URL + '/api/CheckCodeByUser_Login';
-      var param = new Map<String, String>();
-      param['UserName'] = userName;
-      param['Code'] = code;
-      final data = await GetIt.instance
-          .get<NetworkDataSource>()
-          .post(Uri.parse(url), body: param);
-      return data as bool;
+      final url = BASE_URL + '/api/v1/user/login_facebook';
+      var body = json.encode({
+        "AccessToken": accessToken,
+        "UserID": userID,
+      });
+      Map<String,String> headers = {
+        'Content-type' : 'application/json',
+        'Accept': 'application/json',
+      };
+      final response =
+      await http.post(url, body: body, headers: headers);
+      final responseJson = json.decode(response.body);
+      return UserInfoModel.fromJson(responseJson);
     } catch (error) {
       print(error);
       return null;
@@ -40,35 +53,30 @@ class LoginResponse extends LoginDataSource {
   }
 
   @override
-  Future<bool> CheckCodeRegisterUserCitizen(String userName, String code)async {
+  Future<UserInfoModel> login_google(String accessToken) async {
     try {
-      final url = BASE_URL + '/api/CheckCodeByUser_DangKy';
-      var param = new Map<String, String>();
-      param['UserName'] = userName;
-      param['Code'] = code;
-      final data = await GetIt.instance
-          .get<NetworkDataSource>()
-          .post(Uri.parse(url), body: param);
-      return data as bool;
+      final url = BASE_URL + '/api/v1/user/login_google';
+      var body = json.encode({
+        "AccessToken": accessToken,
+      });
+      Map<String,String> headers = {
+        'Content-type' : 'application/json',
+        'Accept': 'application/json',
+      };
+      final response =
+      await http.post(url, body: body, headers: headers);
+      final responseJson = json.decode(response.body);
+      return UserInfoModel.fromJson(responseJson);
     } catch (error) {
       print(error);
       return null;
     }
   }
 
-
   @override
-  Future<bool> RegisterUserCitizen(DangKyUserParam param)async {
-    try {
-      final url = BASE_URL + '/api/DangKyUser_NguoiDan';
-      var paramSend = param.toJson();
-      final data = await GetIt.instance
-          .get<NetworkDataSource>()
-          .post(Uri.parse(url), body: paramSend);
-      return data as bool;
-    } catch (error) {
-      print('RegisterUserCitizen $error');
-      return null;
-    }
+  Future<UserInfoModel> register(DangKyUserParam param) {
+    // TODO: implement register
+    throw UnimplementedError();
   }
+
 }

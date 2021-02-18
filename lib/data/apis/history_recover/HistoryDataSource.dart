@@ -4,8 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:image_recovery/pages/RecoverImageResult/model/ImageResult.dart';
 
 abstract class HistoryRecoveryDatasource{
-  Future<List<HistoryDatasourceModel>> historyRecoverImages(int page);
-  Future<ImageResult> historyRecoverDetailImages(int ID);
+  Future<List<HistoryDatasourceModel>> historyRecoverImages(int page, String Token);
+  Future<ImageResult> historyRecoverDetailImages(int ID, String Token);
 }
 
 class HistoryDatasourceModel {

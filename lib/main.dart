@@ -11,7 +11,7 @@ import 'package:image_recovery/pages/SplashScreen/SplashScreen.dart';
 import 'package:image_recovery/pages/home/blocs/HomeBloc.dart';
 import 'package:image_recovery/pages/home/events/HomeEvent.dart';
 import 'package:image_recovery/pages/home/view/home_view.dart';
-import 'package:image_recovery/pages/login/login_page.dart';
+import 'file:///C:/Users/USER/Desktop/UserService/ImageRecovery/lib/pages/login/view/login_page.dart';
 import 'package:image_recovery/routes.dart';
 import 'package:image_recovery/utils/navigations/navigation_datasource.dart';
 import 'package:splashscreen/splashscreen.dart';

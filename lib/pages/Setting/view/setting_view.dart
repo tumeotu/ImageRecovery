@@ -500,9 +500,7 @@ class _SettingHomeState extends State<SettingHome> {
       return GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: (){
-          Routes.sailor.popUntil((context) {
-            return false;
-          });
+          _navigation.popNavigation(context);
           _navigation.pushNavigation(NamePage.loginPage);
         },
         child: Row(

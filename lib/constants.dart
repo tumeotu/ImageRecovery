@@ -32,7 +32,7 @@ const String phananh_home_page = '/phananh_home_page';
 
 ///wigth height device
 const double heightNavigationBar = 60.0;
-const BASE_URL = "http://192.168.1.8:7000";
+const BASE_URL = "http://192.168.1.7:7000";
 
 
 const SUCCESS_CODE = 200;

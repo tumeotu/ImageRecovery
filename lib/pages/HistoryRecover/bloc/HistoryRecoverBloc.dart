@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get_it/get_it.dart';
@@ -10,6 +11,7 @@ import 'package:image_recovery/pages/HistoryRecover/event/HistoryRecoverEvent.da
 import 'package:image_recovery/pages/HistoryRecover/state/HistoryRecoverState.dart';
 import 'package:image_recovery/routes.dart';
 import 'package:image_recovery/utils/navigations/navigation_datasource.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HistoryRecoverBloc extends Bloc<HistoryRecoverEvent, HistoryRecoverState> {
   HistoryRecoveryDatasource dataSource = getIt.get<HistoryRecoveryDatasource>();
@@ -19,28 +21,45 @@ class HistoryRecoverBloc extends Bloc<HistoryRecoverEvent, HistoryRecoverState> 
   Stream<HistoryRecoverState> mapEventToState(HistoryRecoverEvent event) async* {
     try {
       if (event is HistoryRecoverEventStart) {
-        if(event.isGetDetail==false)
-        {
-          var data = await dataSource.historyRecoverImages(event.page);
-          if(data!=null)
-            yield HistoryRecoverStateStart(data, false, false);
-          else
-            yield HistoryRecoverStateFailure();
-        }
-        else{
-          yield HistoryRecoverStateStart(null, true, false);
-          var data = await dataSource.historyRecoverDetailImages(event.ID);
-          if(data!=null)
-            {
-              var param={
-                'image': data
-              };
-              yield HistoryRecoverStateStart(event.images,false, false);
-              final _navigation = GetIt.instance.get<NavigationDataSource>();
-              _navigation.pushNavigation(NamePage.photoViewPage, params: param);
+        String Token="ImageRcovery";
+        var prefs= await SharedPreferences.getInstance();
+        try {
+          Token = prefs.getString('Token');
+          if(Token!=null){
+            var connectivityResult = await (Connectivity().checkConnectivity());
+            if (connectivityResult != ConnectivityResult.none) {
+              if(event.isGetDetail==false){
+                var data = await dataSource.historyRecoverImages(event.page, Token);
+                if(data!=null)
+                  yield HistoryRecoverStateStart(data, false, false);
+                else
+                  yield HistoryRecoverStateFailure();
+              }
+              else{
+                yield HistoryRecoverStateStart(null, true, false);
+                var data = await dataSource.historyRecoverDetailImages(event.ID, Token);
+                if(data!=null)
+                {
+                  var param={
+                    'image': data
+                  };
+                  yield HistoryRecoverStateStart(event.images,false, false);
+                  final _navigation = GetIt.instance.get<NavigationDataSource>();
+                  _navigation.pushNavigation(NamePage.photoViewPage, params: param);
+                }
+                else
+                  yield HistoryRecoverStateFailure();
+              }
             }
-          else
-            yield HistoryRecoverStateFailure();
+            else
+              yield HistoryRecoverStateMustConnectInterNet();
+          }
+          else{
+            yield HistoryRecoverStateMustLogin();
+          }
+        }
+        catch(e){
+          yield HistoryRecoverStateMustLogin();
         }
       }
     } catch (exception) {

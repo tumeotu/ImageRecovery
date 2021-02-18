@@ -376,6 +376,33 @@ class _PhotoViewHomeState extends State<PhotoViewHome> {
                         flex: 1,
                         child: GestureDetector(
                           behavior: HitTestBehavior.translucent,
+                          onTap: () => {
+                            showEdit(),
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                FontAwesome5.edit,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                                child: Text(
+                                  'Edit',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.translucent,
                           onTap: () => {showSaveView(context)},
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,

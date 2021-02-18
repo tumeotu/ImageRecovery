@@ -28,6 +28,7 @@ class UserCitizenLoginResult {
 }
 
 class DangKyUserParam {
+
   final String UserName;
   final String HoTen;
   final String Email;

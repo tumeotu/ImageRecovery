@@ -22,18 +22,17 @@ class  HistoryRecoveryResponse extends  HistoryRecoveryDatasource {
   }
 
   @override
-  Future<List<HistoryDatasourceModel>> historyRecoverImages(int page) async {
+  Future<List<HistoryDatasourceModel>> historyRecoverImages(int page, String Token) async {
     try {
 
       var param = {
         "PageNum":page.toString(),
         "PageSize":100.toString()
       };
-      var token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJBdXRob3IiOjF9.ey-e4CHDHrXS5TaMlpcQFTrgS5dbJ-O2rz_9aTPbVxw8PdERxT8uBnT0eELMpYVQBgvzFgi7pohZhuq5QPj6ig";
       var uri =
       Uri.http(BASE_URL.replaceAll("http://", ""),'/api/v1/user/history', param);
       var response = await http.get(uri, headers: {
-        HttpHeaders.authorizationHeader: '$token',
+        HttpHeaders.authorizationHeader: '$Token',
         HttpHeaders.contentTypeHeader: 'application/json',
       });
       var datas=json.decode(utf8.decode(response.bodyBytes));
@@ -49,16 +48,15 @@ class  HistoryRecoveryResponse extends  HistoryRecoveryDatasource {
   }
 
   @override
-  Future<ImageResult> historyRecoverDetailImages(int ID) async {
+  Future<ImageResult> historyRecoverDetailImages(int ID, String Token) async {
     try {
       var param = {
         "ID":ID.toString()
       };
-      var token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJBdXRob3IiOjF9.ey-e4CHDHrXS5TaMlpcQFTrgS5dbJ-O2rz_9aTPbVxw8PdERxT8uBnT0eELMpYVQBgvzFgi7pohZhuq5QPj6ig";
       var uri =
       Uri.http(BASE_URL.replaceAll("http://", ""),'/api/v1/user/history_detail', param);
       var response = await http.get(uri, headers: {
-        HttpHeaders.authorizationHeader: '$token',
+        HttpHeaders.authorizationHeader: '$Token',
         HttpHeaders.contentTypeHeader: 'application/json',
       });
       var datas=json.decode(utf8.decode(response.bodyBytes));
