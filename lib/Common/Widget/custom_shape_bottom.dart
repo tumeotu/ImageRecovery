@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class BottomShape extends StatelessWidget {
-
   BottomShape({
     Key key,
   }) : super(key: key) {
@@ -10,7 +9,7 @@ class BottomShape extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: new EdgeInsets.only(
-          top: MediaQuery.of(context).size.height*0.88
+          top: MediaQuery.of(context).size.height*0.83
       ),
       child: ClipPath(
         clipper: CustomShapeClipper(),
@@ -18,7 +17,6 @@ class BottomShape extends StatelessWidget {
       ),
     );
   }
-
 }
 
 class CustomShapeClipper extends CustomClipper<Path> {
@@ -36,7 +34,6 @@ class CustomShapeClipper extends CustomClipper<Path> {
       ..cubicTo(controlPoint1.dx, controlPoint1.dy, controlPoint2.dx,
           controlPoint2.dy, endPoint.dx, endPoint.dy)
       ..close();
-
     return path;
   }
   @override

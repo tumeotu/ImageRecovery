@@ -421,31 +421,14 @@ class _SettingHomeState extends State<SettingHome> {
                         child: Stack(
                             children:[
                               CircleAvatar(
-                                  backgroundImage:AssetImage(
+                                  backgroundImage:state.image==null?
+                                  AssetImage(
                                     "images/filter.webp",
+                                  )
+                                  :MemoryImage(
+                                    state.image
                                   ),
                                   radius:MediaQuery.of(context).size.width*0.14
-                              ),
-                              Align(
-                                alignment: Alignment.bottomRight,
-                                child: GestureDetector(
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width/12,
-                                    height: MediaQuery.of(context).size.width/12,
-                                    decoration: BoxDecoration(
-                                      color: Color(0xff56AAE7),
-                                      borderRadius: BorderRadius.all(Radius.circular(MediaQuery.of(context).size.width/8)),
-                                    ),
-                                    child: Icon(
-                                        Icons.edit,
-                                        size: 20,
-                                        color: Colors.white
-                                    ),
-                                  ),
-                                  onTap: ()=>{
-                                    //_navigation.popNavigation(context)
-                                  },
-                                ),
                               ),
                             ]
                         ),

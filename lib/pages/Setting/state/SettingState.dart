@@ -18,11 +18,12 @@ class SettingStateInitial extends SettingState {
   List<Object> get props => [];
 }
 class SettingStateStart extends SettingState {
-  SettingStateStart();
-  SettingStateStart copy() => SettingStateStart();
+  Uint8List image;
+  SettingStateStart(this.image);
+  SettingStateStart copy(SettingStateFailure) => SettingStateStart(this.image);
   @override
   // TODO: implement props
-  List<Object> get props => [];
+  List<Object> get props => [this.image];
 }
 
 class SettingStateFailure extends SettingState {

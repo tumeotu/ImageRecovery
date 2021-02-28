@@ -9,15 +9,14 @@ import 'package:image_recovery/language/localization/app_translations.dart';
 import 'package:image_recovery/language/localization/application.dart';
 import 'package:image_recovery/utils/navigations/navigation_datasource.dart';
 
-class EditAccountScreen extends StatefulWidget {
+class EditAccountTempScreen extends StatefulWidget {
   @override
   _EditAccountScreenState createState() => _EditAccountScreenState();
 }
 
-class _EditAccountScreenState extends State<EditAccountScreen> {
+class _EditAccountScreenState extends State<EditAccountTempScreen> {
   final getIt = GetIt.instance;
   final _navigation = GetIt.instance.get<NavigationDataSource>();
-
   void onLocaleChange(Locale locale) async {
     setState(() {
       AppTranslations.load(locale);

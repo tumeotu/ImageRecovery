@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_recovery/data/apis/logins/login_datasource.dart';
@@ -15,7 +17,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
     // TODO: implement mapEventToState
     if(event is LoginEventStart){
-      yield LoginStateInitial(false, false,"","");
+      SharedPreferences prefs= await SharedPreferences.getInstance();
+      String Username=await prefs.getString('UserName');
+      String Password=await prefs.getString('Password');
+      yield LoginStateInitial(false, false,Username,Password);
     }
     else if (event is LoginEventSignInUser) {
       yield LoginStateInitial(true, false,"","");
@@ -24,7 +29,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if(dataUser!=null){
         SharedPreferences prefs= await SharedPreferences.getInstance();
         await prefs.setInt('Login', 1);
+        await prefs.setString('UserInfo',json.encode(dataUser.toJson()));
         await prefs.setString('Token',dataUser.token);
+        if(event.isSaveAccount)
+          {
+            await prefs.setString('UserName',event.userName);
+            await prefs.setString('Password',event.password);
+          }
         _navigation.popNavigation(event.context);
         var params={
           "page":0
@@ -43,7 +54,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if(dataUser!=null){
         SharedPreferences prefs= await SharedPreferences.getInstance();
         await prefs.setInt('Login', 1);
+        await prefs.setString('UserInfo',json.encode(dataUser.toJson()));
         await prefs.setString('Token',dataUser.token);
+        String abc=dataUser.toJson().toString();
         _navigation.popNavigation(event.context);
         var params={
           "page":0
@@ -61,7 +74,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if(dataUser!=null){
         SharedPreferences prefs= await SharedPreferences.getInstance();
         await prefs.setInt('Login', 1);
+        await prefs.setString('UserInfo',json.encode(dataUser.toJson()));
         await prefs.setString('Token',dataUser.token);
+        String abc=dataUser.toJson().toString();
         _navigation.popNavigation(event.context);
         var params={
           "page":0

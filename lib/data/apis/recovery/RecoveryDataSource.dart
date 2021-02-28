@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:image_recovery/pages/RecoverImageResult/model/ImageResult.dart';
 
 abstract class RecoveryDatasource{
-  Future<List<ImageResult>> recoveryImages(List<ImageResult> images);
+  Future<List<ImageResult>> recoveryImages(List<ImageResult> images, String token);
 }
 
 class RecoveryDatasourceModel {

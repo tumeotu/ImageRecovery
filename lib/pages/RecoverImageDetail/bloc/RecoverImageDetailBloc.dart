@@ -13,6 +13,7 @@ import 'package:image_recovery/pages/RecoverImageDetail/state/RecoverImageDetail
 import 'package:image_recovery/pages/home/model/ModelImage.dart';
 import 'package:image_recovery/routes.dart';
 import 'package:image_recovery/utils/navigations/navigation_datasource.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class RecoverImageDetailBloc extends Bloc<RecoverImageDetailEvent, RecoverImageDetailState> {
@@ -38,7 +39,9 @@ class RecoverImageDetailBloc extends Bloc<RecoverImageDetailEvent, RecoverImageD
             }
             //yield RecoverImageDetailStateInitial();
             yield RecoverImageDetailStateStart(images, true, false,false);
-            var data = await dataSource.recoveryImages(event.image);
+            SharedPreferences prefs= await SharedPreferences.getInstance();
+            String token=await prefs.getString('Token');
+            var data = await dataSource.recoveryImages(event.image, token);
             if(data!=null)
               {
                 var param={

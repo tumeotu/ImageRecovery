@@ -13,13 +13,24 @@ import 'package:image_recovery/routes.dart';
 import 'package:image_recovery/utils/navigations/navigation_datasource.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:photo_manager/photo_manager.dart';
+typedef Uint8ListCallBack = Function(Uint8List bytes);
 
 class ModalInsideModal extends StatefulWidget {
-  ModalInsideModal({Key key, this.title, this.multi=false,this.ContinuePick=false,this.images}) : super(key: key);
+  ModalInsideModal(
+      {Key key,
+        this.title,
+        this.multi=false,
+        this.isAvatarEdit=false,
+        this.ContinuePick=false,
+        this.images,
+        this.methodChange
+      }) : super(key: key);
   final String title;
   final bool multi;
+  final bool isAvatarEdit;
   final bool ContinuePick;
   final images;
+  final Uint8ListCallBack methodChange;
   @override
   _ModalInsideModalState createState() => _ModalInsideModalState();
 }
@@ -91,12 +102,19 @@ class _ModalInsideModalState extends State<ModalInsideModal> {
                         _navigation.pushNavigation(NamePage.detailImageRecoverPage, params: params1);
                   }
                   else {
-                    Uint8List image;
-                    image= await testCompressFile(images[selected[0]].file);
-                    var params={
-                      'image': image
-                    };
-                    _navigation.pushNavigation(NamePage.detailImagePage, params: params);
+                    if(widget.isAvatarEdit){
+                      Uint8List image;
+                      image= await testCompressFile(images[selected[0]].file);
+                      widget.methodChange(image);
+                    }
+                    else{
+                      Uint8List image;
+                      image= await testCompressFile(images[selected[0]].file);
+                      var params={
+                        'image': image
+                      };
+                      _navigation.pushNavigation(NamePage.detailImagePage, params: params);
+                    }
                   }
                 },
                 child: Icon(

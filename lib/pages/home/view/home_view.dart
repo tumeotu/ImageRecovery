@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:ffi';
+import 'dart:typed_data';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen>with RouteAware {
   PageController _pageController;
   GlobalKey _bottomNavigationKey = GlobalKey();
   int index=0;
+  Uint8List image;
   @override
   void initState(){
     super.initState();
@@ -62,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen>with RouteAware {
           drawer: NavDrawer(
             contextPage: context,
             navigation: _navigation,
+            image: image,
             setting: (){
               final CurvedNavigationBarState navBarState =
                   _bottomNavigationKey.currentState;
@@ -126,6 +130,7 @@ class _HomeScreenState extends State<HomeScreen>with RouteAware {
         }
         else if(state is HomeStateStart)
         {
+          image = state.image;
           _pageController = new PageController(initialPage:state.page);
           index= state.page;
           return getHomeView();

@@ -11,8 +11,13 @@ import 'package:image_recovery/modules/phananhtructuyen/pages/phananh_home/phana
 import 'package:image_recovery/modules/phananhtructuyen/pages/phananh_home/phananh_home_page.dart';
 import 'package:image_recovery/modules/phananhtructuyen/pages/phananh_tracuu/phananh_tracuu.dart';
 import 'package:image_recovery/modules/phananhtructuyen/phananhtructuyen.dart';
+import 'package:image_recovery/pages/Account/blocs/account_bloc.dart';
+import 'package:image_recovery/pages/Account/events/account_event.dart';
 import 'package:image_recovery/pages/Account/view/account_edit_view.dart';
 import 'package:image_recovery/pages/Account/view/account_view.dart';
+import 'package:image_recovery/pages/ChangePassword/blocs/change_password_bloc.dart';
+import 'package:image_recovery/pages/ChangePassword/events/change_password_event.dart';
+import 'package:image_recovery/pages/ChangePassword/view/change_password_view.dart';
 import 'package:image_recovery/pages/Crop/bloc/CropBloc.dart';
 import 'package:image_recovery/pages/Crop/event/CropEvent.dart';
 import 'package:image_recovery/pages/Crop/view/crop_view.dart';
@@ -29,6 +34,9 @@ import 'package:image_recovery/pages/DetectResult/view/detect_result_view.dart';
 import 'package:image_recovery/pages/Edit/bloc/EditBloc.dart';
 import 'package:image_recovery/pages/Edit/event/EditEvent.dart';
 import 'package:image_recovery/pages/Edit/view/edit_view.dart';
+import 'package:image_recovery/pages/EditAccount/blocs/edit_account_bloc.dart';
+import 'package:image_recovery/pages/EditAccount/events/edit_account_event.dart';
+import 'package:image_recovery/pages/EditAccount/view/edit_account_view.dart';
 import 'package:image_recovery/pages/Filter/bloc/FilterBloc.dart';
 import 'package:image_recovery/pages/Filter/event/FilterEvent.dart';
 import 'package:image_recovery/pages/Filter/model/matrix.dart';
@@ -46,7 +54,9 @@ import 'package:image_recovery/pages/RecoverImageResult/bloc/RecoverImageResultl
 import 'package:image_recovery/pages/RecoverImageResult/event/RecoverImageResultlEvent.dart';
 import 'package:image_recovery/pages/RecoverImageResult/model/ImageResult.dart';
 import 'package:image_recovery/pages/RecoverImageResult/view/recovery_image_result_view.dart';
-import 'package:image_recovery/pages/Register/view/register_account_view.dart';
+import 'package:image_recovery/pages/Register/blocs/register_bloc.dart';
+import 'package:image_recovery/pages/Register/events/register_event.dart';
+import 'package:image_recovery/pages/Register/view/register_view.dart';
 import 'package:image_recovery/pages/SoThuTu/Model/bloc/LaySoThuTuBloc.dart';
 import 'package:image_recovery/pages/SoThuTu/Model/event/LaySoThuTuEvent.dart';
 import 'package:image_recovery/pages/home/blocs/HomeBloc.dart';
@@ -177,13 +187,26 @@ class Routes {
             );
           },
           params: []))
-
       ///registerPage
       ..addRoute(SailorRoute(
           name: NamePage.registerPage.toString(),
           builder: (context, args, params) {
-            return RegisterScreen();
-          }))
+            return BlocProvider<RegisterBloc>(
+              create: (_) => RegisterBloc()..add(RegisterEventStart(false, false,"","","","","")),
+              child: RegisterScreen(),
+            );
+          },
+          params: []))
+    ///changePasswordPage
+      ..addRoute(SailorRoute(
+          name: NamePage.changePasswordPage.toString(),
+          builder: (context, args, params) {
+            return BlocProvider<ChangePasswordBloc>(
+              create: (_) => ChangePasswordBloc()..add(ChangePasswordEventStart(false, false,"","", null,"")),
+              child: ChangePasswordScreen(),
+            );
+          },
+          params: []))
 
       ///ForgotPasswordPage
       ..addRoute(SailorRoute(
@@ -211,14 +234,22 @@ class Routes {
       ..addRoute(SailorRoute(
           name: NamePage.accountPage.toString(),
           builder: (context, args, params) {
-            return AccountScreen();
-          }))
-    ///AccountPage
+            return BlocProvider<AccountBloc>(
+              create: (_) => AccountBloc()..add(AccountEventStart(false, null)),
+              child: AccountScreen(),
+            );
+          },
+          params: []))
+    ///EditAccountPage
       ..addRoute(SailorRoute(
           name: NamePage.editAccountPage.toString(),
           builder: (context, args, params) {
-            return EditAccountScreen();
-          }))
+            return BlocProvider<EditAccountBloc>(
+              create: (_) => EditAccountBloc()..add(EditAccountEventStart(false, false,"","","","","")),
+              child: EditAccountScreen(),
+            );
+          },
+          params: []))
 
       /// filter page
       ..addRoute(SailorRoute(
@@ -469,6 +500,7 @@ enum NamePage {
   loginPage,
   registerPage,
   forgotPasswordPage,
+  changePasswordPage,
   homePage,
   accountPage,
   editAccountPage,

@@ -29,20 +29,12 @@ class UserCitizenLoginResult {
 
 class DangKyUserParam {
 
-  final String UserName;
-  final String HoTen;
+  final String Name;
   final String Email;
-  final String SoDT;
-  final String SoCMND;
+  final String Phone;
+  final String Address;
+  final String Password;
 
-  DangKyUserParam({this.UserName='', this.HoTen='', this.Email='', this.SoDT='', this.SoCMND=''});
-  Map<String, String> toJson() {
-    final Map<String, String> data = new Map<String, String>();
-    data['UserName'] = this.UserName;
-    data['HoTen'] = this.HoTen;
-    data['Email'] = this.Email;
-    data['SoDT'] = this.SoDT;
-    data['SoCMND'] = this.SoCMND;
-    return data;
-  }
+  DangKyUserParam({this.Name='', this.Email='', this.Phone='', this.Address='', this.Password=''});
+
 }

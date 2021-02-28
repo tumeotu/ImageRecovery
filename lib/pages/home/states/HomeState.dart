@@ -25,9 +25,10 @@ class HomeStateFailure extends HomeState {
 
 class HomeStateStart extends HomeState {
   int page;
-  HomeStateStart(this.page);
-  HomeStateStart copy(page) => HomeStateStart(this.page);
+  Uint8List image;
+  HomeStateStart(this.page, this.image);
+  HomeStateStart copy(page, image) => HomeStateStart(this.page, this.image);
   @override
   // TODO: implement props
-  List<Object> get props => [this.page];
+  List<Object> get props => [this.page, this.image];
 }

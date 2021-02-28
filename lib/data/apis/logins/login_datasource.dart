@@ -5,8 +5,12 @@ import 'package:image_recovery/data/models/user_models.dart';
 abstract class LoginDataSource{
   Future<UserInfoModel> login(String userName, String password);
   Future<UserInfoModel> register(DangKyUserParam param);
+  Future<UserInfoModel> edit_account(DangKyUserParam param, String Token);
   Future<UserInfoModel> login_facebook(String accessToken, String userID);
   Future<UserInfoModel> login_google(String accessToken);
+  Future<UserInfoModel> change_avatar(String Token, Uint8List image);
+  Future<UserInfoModel> verify_email(String email);
+  Future<UserInfoModel> change_password(String Token,String oldPassword, String newPassword);
 }
 
 class UserInfoModel{

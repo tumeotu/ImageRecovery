@@ -29,9 +29,9 @@ class _LoginPageState extends State<LoginPage> {
   final _navigation = GetIt.instance.get<NavigationDataSource>();
   double deviceWidth, deviceHeight;
   var checkGhiNho = true;
-  final userName= TextEditingController();
-  final passWord = TextEditingController();
-
+  var userName= TextEditingController();
+  var passWord = TextEditingController();
+  int isnew=0;
   GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: <String>[
       'email',
@@ -70,8 +70,8 @@ class _LoginPageState extends State<LoginPage> {
         ..add(LoginEventSinginFacebook(result.token.toString(),result.userId.toString(), true, context));
       await FacebookAuth.instance.logOut();
     } catch(error){
-      BlocProvider.of<LoginBloc>(context)
-        ..add(LoginEventSinginFacebook("","", false, context));
+      // BlocProvider.of<LoginBloc>(context)
+      //   ..add(LoginEventSinginFacebook("","", false, context));
     }
   }
 
@@ -94,7 +94,6 @@ class _LoginPageState extends State<LoginPage> {
           )),
     );
   }
-
   _getCustomBody() {
     return BlocBuilder<LoginBloc, LoginState>(
       builder: (context, state) {
@@ -102,8 +101,14 @@ class _LoginPageState extends State<LoginPage> {
           return Container();
         }
         if(state is LoginStateInitial){
-          if(!state.isLogin)
+          if(!state.isLogin){
+            if(isnew<2){
+              userName = TextEditingController(text: state.userName);
+              passWord = TextEditingController(text: state.password);
+              this.isnew++;
+            }
             return getBodyView(state);
+          }
           else
             return getBodyViewLogin(state);
         }
@@ -115,11 +120,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   getBodyView(LoginStateInitial state) {
-    return Stack(
-      children: [
-        Container(
-          color: Colors.white,
-          child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Stack(
+        children: [
+          Container(
+            color: Colors.white,
             child: Stack(
               children: [
                 Align(
@@ -132,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                 Align(
                     alignment: Alignment.topCenter,
                     child: Container(
-                      margin: new EdgeInsets.only(top: MediaQuery.of(context).size.height*0.35, left: 20, right: 20),
+                      margin: new EdgeInsets.only(top: MediaQuery.of(context).size.height*0.32, left: 20, right: 20),
                       height: MediaQuery.of(context).size.height*0.28,
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -179,9 +184,9 @@ class _LoginPageState extends State<LoginPage> {
                                           borderRadius: new BorderRadius.circular(8.0)),
                                       child:  TextField(
                                         controller: userName,
+                                        keyboardType: TextInputType.emailAddress,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          labelText: state.userName,
                                           hintText: AppTranslations.of(context).text("Username").toString(),
                                           prefixIcon: Icon(Icons.person),
                                         ),
@@ -199,9 +204,9 @@ class _LoginPageState extends State<LoginPage> {
                                       child: TextField(
                                         controller: passWord,
                                         obscureText: true,
+                                        keyboardType: TextInputType.emailAddress,
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
-                                            labelText: state.userName,
                                             prefixIcon: Icon(Icons.vpn_key),
                                             hintText: AppTranslations.of(context).text("Password").toString()
                                         ),
@@ -234,7 +239,7 @@ class _LoginPageState extends State<LoginPage> {
                   alignment: Alignment.topCenter,
                   child: Container(
                     margin: new EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height*0.64,
+                        top: MediaQuery.of(context).size.height*0.62,
                         left: 20,
                         right: 20
                     ),
@@ -279,8 +284,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   ),
                                   onPressed: () async {
-                                    String a="";
-
+                                    FocusScope.of(context).unfocus();
                                     BlocProvider.of<LoginBloc>(context)
                                       ..add(LoginEventSignInUser(
                                           userName.value.text.toString(),
@@ -300,7 +304,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Container(
                       margin: new EdgeInsets.only(
                           right: 30,
-                          top: MediaQuery.of(context).size.height*0.735
+                          top: MediaQuery.of(context).size.height*0.705
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -328,7 +332,7 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: Alignment.topCenter,
                     child: Container(
                       margin: new EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height*0.79
+                          top: MediaQuery.of(context).size.height*0.76
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -366,7 +370,7 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: Alignment.topCenter,
                     child: Container(
                       margin: new EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height*0.82
+                          top: MediaQuery.of(context).size.height*0.79
                       ),
                       padding: new EdgeInsets.all(5),
                       child: Row(
@@ -415,8 +419,8 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

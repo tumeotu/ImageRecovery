@@ -25,11 +25,10 @@ class RecoveryResponse extends RecoveryDatasource {
   }
 
   @override
-  Future<List<ImageResult>> recoveryImages(List<ImageResult> images) async {
+  Future<List<ImageResult>> recoveryImages(List<ImageResult> images, String token) async {
     try {
       final url = BASE_URL + '/api/v1/recover/image/list';
       var request = http.MultipartRequest('POST', Uri.parse(url));
-      var token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJBdXRob3IiOjF9.ey-e4CHDHrXS5TaMlpcQFTrgS5dbJ-O2rz_9aTPbVxw8PdERxT8uBnT0eELMpYVQBgvzFgi7pohZhuq5QPj6ig";
       var param = {
         "Authorization":token
       };

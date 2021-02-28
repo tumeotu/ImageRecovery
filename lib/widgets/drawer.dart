@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -12,6 +14,7 @@ class NavDrawer extends StatelessWidget {
   final VoidCallback setting;
   final VoidCallback filter;
   final VoidCallback recoverImage;
+  final Uint8List image;
   const NavDrawer(
       {Key key,
         this.contextPage,
@@ -19,8 +22,10 @@ class NavDrawer extends StatelessWidget {
         this.setting,
         this.filter,
         this.recoverImage,
+        this.image
         })
       : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -46,9 +51,12 @@ class NavDrawer extends StatelessWidget {
                   children: [
                     Container(
                       child: CircleAvatar(
-                        child:Image.asset(
+                        backgroundImage:this.image==null?Image.asset(
                           "images/avatar.png",
                           fit: BoxFit.fill,
+                        ):
+                        MemoryImage(
+                          this.image
                         ),
                         radius: MediaQuery.of(context).size.height/15,
                       ),
